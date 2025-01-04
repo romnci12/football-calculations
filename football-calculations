@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حسابات رياضية في كرة القدم</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            direction: rtl;
+        }
+        label {
+            margin-top: 10px;
+        }
+        input {
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 10px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>حسابات رياضية في كرة القدم</h1>
+
+    <h2>حساب السرعة</h2>
+    <label for="distance">المسافة (متر): </label>
+    <input type="number" id="distance" placeholder="أدخل المسافة" required><br>
+
+    <label for="time">الزمن (ثانية): </label>
+    <input type="number" id="time" placeholder="أدخل الزمن" required><br>
+
+    <button onclick="calculateSpeed()">حساب السرعة</button>
+    <div class="result" id="speedResult"></div>
+
+    <h2>حساب دقة الهدف</h2>
+    <label for="successfulGoals">عدد الأهداف الناجحة: </label>
+    <input type="number" id="successfulGoals" placeholder="أدخل الأهداف الناجحة" required><br>
+
+    <label for="totalShots">عدد التسديدات الكلي: </label>
+    <input type="number" id="totalShots" placeholder="أدخل عدد التسديدات" required><br>
+
+    <button onclick="calculateAccuracy()">حساب دقة الهدف</button>
+    <div class="result" id="accuracyResult"></div>
+
+    <h2>حساب المسافة المثالية للتمريرات</h2>
+    <label for="horizontalDistance">المسافة الأفقية (متر): </label>
+    <input type="number" id="horizontalDistance" placeholder="أدخل المسافة الأفقية" required><br>
+
+    <label for="verticalDistance">المسافة الرأسية (متر): </label>
+    <input type="number" id="verticalDistance" placeholder="أدخل المسافة الرأسية" required><br>
+
+    <button onclick="calculatePassDistance()">حساب المسافة المثالية</button>
+    <div class="result" id="passDistanceResult"></div>
+
+    <h2>حساب زاوية التسديد المثالية</h2>
+    <label for="shotHeight">الارتفاع (متر): </label>
+    <input type="number" id="shotHeight" placeholder="أدخل الارتفاع" required><br>
+
+    <label for="horizontalShotDistance">المسافة الأفقية للتسديد (متر): </label>
+    <input type="number" id="horizontalShotDistance" placeholder="أدخل المسافة الأفقية للتسديد" required><br>
+
+    <button onclick="calculateShotAngle()">حساب زاوية التسديد</button>
+    <div class="result" id="shotAngleResult"></div>
+
+    <h2>حساب الوقت المطلوب للوصول إلى الهدف</h2>
+    <label for="goalDistance">المسافة إلى الهدف (متر): </label>
+    <input type="number" id="goalDistance" placeholder="أدخل المسافة إلى الهدف" required><br>
+
+    <label for="playerSpeed">السرعة (متر/ثانية): </label>
+    <input type="number" id="playerSpeed" placeholder="أدخل السرعة" required><br>
+
+    <button onclick="calculateTimeToGoal()">حساب الوقت للوصول إلى الهدف</button>
+    <div class="result" id="timeToGoalResult"></div>
+
+    <script>
+        // حساب السرعة
+        function calculateSpeed() {
+            var distance = parseFloat(document.getElementById('distance').value);
+            var time = parseFloat(document.getElementById('time').value);
+            if (isNaN(distance) || isNaN(time) || time <= 0) {
+                document.getElementById('speedResult').innerHTML = "<span class='error'>الرجاء إدخال قيم صحيحة للمسافة والزمن.</span>";
+                return;
+            }
+            var speed = distance / time;
+            document.getElementById('speedResult').innerText = "السرعة هي: " + speed.toFixed(2) + " متر/ثانية";
+        }
+
+        // حساب دقة الهدف
+        function calculateAccuracy() {
+            var successfulGoals = parseFloat(document.getElementById('successfulGoals').value);
+            var totalShots = parseFloat(document.getElementById('totalShots').value);
+            if (isNaN(successfulGoals) || isNaN(totalShots) || totalShots <= 0) {
+                document.getElementById('accuracyResult').innerHTML = "<span class='error'>الرجاء إدخال قيم صحيحة للأهداف والتسديدات.</span>";
+                return;
+            }
+            var accuracy = (successfulGoals / totalShots) * 100;
+            document.getElementById('accuracyResult').innerText = "دقة الهدف هي: " + accuracy.toFixed(2) + "%";
+        }
+
+        // حساب المسافة المثالية للتمريرات
+        function calculatePassDistance() {
+            var horizontalDistance = parseFloat(document.getElementById('horizontalDistance').value);
+            var verticalDistance = parseFloat(document.getElementById('verticalDistance').value);
+            if (isNaN(horizontalDistance) || isNaN(verticalDistance)) {
+                document.getElementById('passDistanceResult').innerHTML = "<span class='error'>الرجاء إدخال قيم صحيحة للمسافات.</span>";
+                return;
+            }
+            var passDistance = Math.sqrt(Math.pow(horizontalDistance, 2) + Math.pow(verticalDistance, 2));
+            document.getElementById('passDistanceResult').innerText = "المسافة المثالية للتمريرات هي: " + passDistance.toFixed(2) + " متر";
+        }
+
+        // حساب زاوية التسديد المثالية
+        function calculateShotAngle() {
+            var shotHeight = parseFloat(document.getElementById('shotHeight').value);
+            var horizontalShotDistance = parseFloat(document.getElementById('horizontalShotDistance').value);
+            if (isNaN(shotHeight) || isNaN(horizontalShotDistance) || horizontalShotDistance <= 0) {
+                document.getElementById('shotAngleResult').innerHTML = "<span class='error'>الرجاء إدخال قيم صحيحة للتسديد.</span>";
+                return;
+            }
+            var angle = Math.atan(shotHeight / horizontalShotDistance) * (180 / Math.PI);
+            document.getElementById('shotAngleResult').innerText = "زاوية التسديد المثالية هي: " + angle.toFixed(2) + "°";
+        }
+
+        // حساب الوقت المطلوب للوصول إلى الهدف
+        function calculateTimeToGoal() {
+            var goalDistance = parseFloat(document.getElementById('goalDistance').value);
+            var playerSpeed = parseFloat(document.getElementById('playerSpeed').value);
+            if (isNaN(goalDistance) || isNaN(playerSpeed) || playerSpeed <= 0) {
+                document.getElementById('timeToGoalResult').innerHTML = "<span class='error'>الرجاء إدخال قيم صحيحة للمسافة والسرعة.</span>";
+                return;
+            }
+            var timeToGoal = goalDistance / playerSpeed;
+            document.getElementById('timeToGoalResult').innerText = "الوقت للوصول إلى الهدف هو: " + timeToGoal.toFixed(2) + " ثانية";
+        }
+    </script>
+
+</body>
+</html>
